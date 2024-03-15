@@ -1,8 +1,10 @@
 package com.getechnologiesmx.employeeapi.service;
 
+import com.getechnologiesmx.employeeapi.dto.EmployeeDTO;
 import com.getechnologiesmx.employeeapi.entity.Employee;
 import com.getechnologiesmx.employeeapi.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final ModelMapper mapper;
 
     //enlistar todo
     public Iterable<Employee> findAll() {
@@ -27,19 +30,17 @@ public class EmployeeService {
     }
 
     //crear
-    public Employee create(Employee employee){
+    public Employee create(EmployeeDTO employeeDTO){
+        Employee employee = mapper.map(employeeDTO, Employee.class);
+
         return employeeRepository.save(employee);
     }
 
     //actualizar
-    public Employee update(Integer id, Employee form){
+    public Employee update(Integer id, EmployeeDTO employeeDTO){
         Employee employeeFromDb= findById(id);
-
-        employeeFromDb.setName(form.getName());
-        employeeFromDb.setBirthday(form.getBirthday());
-        employeeFromDb.setAge(form.getAge());
-        employeeFromDb.setCharge(form.getCharge());
-        employeeFromDb.setStatus(form.getStatus());
+        //el metodo map realiza una transferencia de datos y toma como entradas dos cosas, la fuente de los datos y a donde los va a transferir
+        mapper.map(employeeDTO, employeeFromDb);
 
         return employeeRepository.save(employeeFromDb);
     }

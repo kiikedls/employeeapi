@@ -1,5 +1,6 @@
 package com.getechnologiesmx.employeeapi.controller;
 
+import com.getechnologiesmx.employeeapi.dto.EmployeeDTO;
 import com.getechnologiesmx.employeeapi.entity.Employee;
 import com.getechnologiesmx.employeeapi.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+@CrossOrigin
 @AllArgsConstructor
 @RequestMapping("/api/employee")
 @RestController
@@ -27,15 +29,15 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Employee create(@RequestBody Employee employee){
+    public Employee create(@RequestBody EmployeeDTO employeeDTO){
         //employee.setBirthday(LocalDate.now());
-        return employeeService.create(employee);
+        return employeeService.create(employeeDTO);
     }
 
     @PutMapping("{id}")
     public Employee update(@PathVariable Integer id,
-                           @RequestBody Employee form){
-        return employeeService.update(id, form);
+                           @RequestBody EmployeeDTO employeeDTO){
+        return employeeService.update(id, employeeDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

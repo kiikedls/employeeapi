@@ -2,6 +2,7 @@ package com.getechnologiesmx.employeeapi;
 
 import com.getechnologiesmx.employeeapi.entity.Employee;
 import com.getechnologiesmx.employeeapi.repository.EmployeeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +33,11 @@ public class EmployeeapiApplication {
 
 			employeeRepository.saveAll(employees);
 		};
+	}
+
+	@Bean
+	ModelMapper modelMapper(){
+		return new ModelMapper();
 	}
 
 }
